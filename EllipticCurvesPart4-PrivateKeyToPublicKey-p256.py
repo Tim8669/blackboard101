@@ -3,17 +3,23 @@
 
 # Below are the public specs for Bitcoin's curve - the secp256k1
 
-Pcurve = 2**256 - 2**32 - 2**9 - 2**8 - 2**7 - 2**6 - 2**4 -1 # The proven prime
-N=0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 # Number of points in the field
-Acurve = 0; Bcurve = 7 # These two defines the elliptic curve. y^2 = x^3 + Acurve * x + Bcurve
+#Pcurve = 2**256 - 2**32 - 2**9 - 2**8 - 2**7 - 2**6 - 2**4 -1 # The proven prime
+Pcurve = 2**224 * (2**32-1) + 2**192 + 2**96 -1 # The proven prime
+#N=0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 # Number of points in the field
+N=0xFFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551
+#Acurve = 0; Bcurve = 7 # These two defines the elliptic curve. y^2 = x^3 + Acurve * x + Bcurve
+Acurve = 0xFFFFFFFF00000001000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFC
+Bcurve = 0x5AC635D8AA3A93E7B3EBBD55769886BC651D06B0CC53B0F63BCE3C3E27D2604B
 #Gx = 55066263022277343669578718895168534326250603453777594175500187360389116729240
-Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
 #Gy = 32670510020758816978083085130507043184471273380659243275938904335757337482424
-Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
+Gx = 0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296
+Gy = 0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5
 GPoint = (Gx,Gy) # This is our generator point. Trillions of dif ones possible
 
 #Individual Transaction/Personal Information
-privKey = 0xA0DC65FFCA799873CBEA0AC274015B9526505DAAAED385155425F7337704883E #replace with any private key
+#privKey = 0xA0DC65FFCA799873CBEA0AC274015B9526505DAAAED385155425F7337704883E #replace with any private key
+#privKey = 0x718B9A218E3D79F315068A63074A13B4124D8716F01734C6A1BCB2C15606B23E #Yansong's pri
+privKey =  0x18af4a6782e48f87165d0186ad1737822736214593c4f39b077d9d5d28003465 #replace with any private key
 
 def modinv(a,n=Pcurve): #Extended Euclidean Algorithm/'division' in elliptic curves
     lm, hm = 1,0
@@ -51,6 +57,7 @@ print
 PublicKey = EccMultiply(GPoint,privKey)
 print "the private key:"; 
 print privKey; print
+print str(hex(privKey)); print
 print "the uncompressed public key (not address):"; 
 print PublicKey; print
 print "the uncompressed public key (HEX):"; 
